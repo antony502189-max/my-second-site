@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qatalog — Work Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:#292929;        /* ← теперь точный цвет из твоих картинок */
+      color:#fff;
+      line-height:1.6;
+    }
+    img{max-width:100%;display:block;margin:0 auto}
+
+    header{
+      position:fixed;top:0;left:0;right:0;padding:20px 5%;
+      display:flex;justify-content:space-between;align-items:center;
+      z-index:1000;
+      background:rgba(41,41,41,0.95);  /* ← тоже #292929 с прозрачностью для красоты */
+      backdrop-filter:blur(12px);
+    }
+    .logo{font-size:28px;font-weight:900}
+    nav a{margin:0 25px;color:#ddd;font-weight:500;text-decoration:none}
+    .btn{background:#0066ff;color:#fff;padding:12px 32px;border-radius:50px;font-weight:600;transition:0.3s}
+    .btn:hover{background:#0055dd}
+
+    section{
+      padding:140px 5%;
+      background:#292929;        /* ← и все секции теперь тоже #292929 */
+    }
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:120px}
+    .hero h1{font-size:4.8rem;max-width:1400px;margin-bottom:80px;line-height:1.2}
+
+    h2{font-size:3.5rem;text-align:center;margin-bottom:20px}
+    .subtitle{color:#aaa;font-size:1.4rem;text-align:center;margin-bottom:100px}
+
+    /* Рабочий слайдер отзывов — как было раньше и работало идеально */
+    .slider{max-width:1400px;margin:0 auto;position:relative;overflow:hidden}
+    .slides{display:flex;width:300%;transition:transform 0.8s cubic-bezier(0.7,0,0.3,1)}
+    .slide{width:33.333%;display:flex;justify-content:center;gap:60px;padding:0 30px;flex-shrink:0}
+    .card{
+      background:#252525;padding:48px 40px;border-radius:20px;width:380px;transition:all 0.6s;cursor:pointer;
+    }
+    .card.active{
+      background:#00f7c8;color:#000;transform:scale(1.1);
+      box-shadow:0 30px 60px rgba(0,247,200,0.4);
+    }
+    .card p{font-size:1.35rem;line-height:1.5;margin-bottom:30px}
+    .author{font-size:0.95rem;color:#999}
+    .author strong{display:block;margin-top:8px;color:#fff}
+    .card.active .author strong{color:#000}
+
+    .dots{margin-top:60px;text-align:center}
+    .dot{
+      width:12px;height:12px;background:#555;border-radius:50%;display:inline-block;margin:0 10px;cursor:pointer;transition:0.3s
+    }
+    .dot.active{background:#fff;transform:scale(1.4)}
+
+    .features-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+      gap:40px;max-width:1400px;margin:0 auto;
+    }
+    .fcard{
+      background:#252525;padding:50px 40px;border-radius:24px;transition:0.3s
+    }
+    .fcard:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+    .fcard i{font-size:4rem;color:#0066ff;margin-bottom:30px;display:block}
+    .fcard h3{font-size:1.5rem;margin-bottom:12px}
+
+    .security-grid{
+      display:flex;justify-content:center;gap:200px;flex-wrap:wrap;margin-top:80px
+    }
+    .sec-item {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .sec-item i {
+        font-size: 6.5rem;
+        color: #00ffff;
+    }
+
+    .cta{text-align:center;padding:240px 20px 180px}
+    .cta h2{font-size:4.8rem;margin-bottom:60px;line-height:1.2}
+    .partners{margin-top:120px}
+
+    footer{
+      background:#292929;       /* ← и футер тоже подогнал */
+      padding:140px 5% 80px;
+      display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:100px;
+      align-items:start;
+    }
+    footer h4{color:#aaa;margin-bottom:25px}
+    footer a{color:#888;text-decoration:none;line-height:2.3;transition:0.3s}
+    footer a:hover{color:#fff}
+    .footer-bottom{
+      grid-column:1/-1;margin-top:120px;
+      display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;
+      color:#666;font-size:0.9rem;
+    }
+    .social a{color:#888;font-size:1.4rem;margin-left:20px}
+
+    section img {
+        border-radius:32px;        /* ← основные большие картинки 1.png, 2.png, 3.png, 4.png и т.д. */
+    }
+
+    @media(max-width:992px){
+      .slide{flex-direction:column;gap:40px}
+      .card.active{transform:scale(1.05)}
+      footer{grid-template-columns:1fr;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Qatalog</div>
+  <nav>
+    <a href="#">Work hub</a>
+    <a href="#">Login</a>
+    <a href="#" class="btn">Get started</a>
+  </nav>
+</header>
+
+<!-- 1.png -->
+<section class="hero">
+  <h1>Work gets disjointed. Scattered. People feel isolated. Qatalog brings order to the chaos—to show folks their work in a new light.</h1>
+  <img src="1.png" alt="Hero">
+</section>
+
+<!-- Отзывы — РАБОЧАЯ анимация (точно как раньше) -->
+<section>
+  <h2>You're not alone</h2>
+  <p class="subtitle">The pains of work are real</p>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <div class="slide">
+        <div class="card" onclick="go(0)"><p>We deliver on such an expansive innovation agenda with so many projects going on at any time, it can be hard to maintain momentum.</p><div class="author">Patrick Osborne<br><strong>Vice President, Hewlett Packard Enterprise</strong></div></div>
+        <div class="card active" onclick="go(1)"><p>We spend about 45 minutes every day invested in processes for updates and keeping everybody in sync.</p><div class="author">Fabrizio Caracausi<br><strong>Product, Square</strong></div></div>
+        <div class="card" onclick="go(2)"><p>I recently had to jump on 10+ different calls across eight different countries to find the right owner and escalation process.</p><div class="author">Francesca Ceseracciu<br><strong>Head of Hotels EMEA, Airbnb</strong></div></div>
+      </div>
+      <div class="slide">
+        <div class="card" onclick="go(1)"><p>I recently had to jump on 10+ different calls across eight different countries to find the right owner and escalation process.</p><div class="author">Francesca Ceseracciu<br><strong>Head of Hotels EMEA, Airbnb</strong></div></div>
+        <div class="card active" onclick="go(2)"><p>We deliver on such an expansive innovation agenda with so many projects going on at any time, it can be hard to maintain momentum.</p><div class="author">Patrick Osborne<br><strong>Vice President, Hewlett Packard Enterprise</strong></div></div>
+        <div class="card" onclick="go(0)"><p>We spend about 45 minutes every day invested in processes for updates and keeping everybody in sync.</p><div class="author">Fabrizio Caracausi<br><strong>Product, Square</strong></div></div>
+      </div>
+      <div class="slide">
+        <div class="card" onclick="go(2)"><p>We spend about 45 minutes every day invested in processes for updates and keeping everybody in sync.</p><div class="author">Fabrizio Caracausi<br><strong>Product, Square</strong></div></div>
+        <div class="card active" onclick="go(0)"><p>I recently had to jump on 10+ different calls across eight different countries to find the right owner and escalation process.</p><div class="author">Francesca Ceseracciu<br><strong>Head of Hotels EMEA, Airbnb</strong></div></div>
+        <div class="card" onclick="go(1)"><p>We deliver on such an expansive innovation agenda with so many projects going on at any time, it can be hard to maintain momentum.</p><div class="author">Patrick Osborne<br><strong>Vice President, Hewlett Packard Enterprise</strong></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="dots">
+    <span class="dot active" onclick="go(0)"></span>
+    <span class="dot" onclick="go(1)"></span>
+    <span class="dot" onclick="go(2)"></span>
+  </div>
+</section>
+
+<!-- 2.png -->
+<section>
+  <h2>It's time for a new way of work</h2>
+  <p class="subtitle">All your people, teams, and tools, and none of the noise</p>
+  <img src="2.png" alt="Integrations">
+</section>
+
+<!-- 3.png -->
+<section>
+  <h2>Visibility that centers your day</h2>
+  <p class="subtitle">A front page for work</p>
+  <img src="3.png" alt="Dashboard">
+</section>
+
+<!-- Функции -->
+<section>
+  <h2>The critical ingredients of a work hub</h2>
+  <div class="features-grid">
+    <div class="fcard"><i class="fas fa-users"></i><h3>Directory</h3><p>Find work info on all your people and teams</p></div>
+    <div class="fcard"><i class="fas fa-rocket"></i><h3>Projects</h3><p>Track activity across teams and tools</p></div>
+    <div class="fcard"><i class="fas fa-search"></i><h3>Search</h3><p>Search across all your connected tools</p></div>
+    <div class="fcard"><i class="fas fa-bullseye"></i><h3>Goals</h3><p>Set and track goals that are visible to everyone</p></div>
+    <div class="fcard"><i class="fas fa-comment-dots"></i><h3>Posts</h3><p>Share one-to-many posts in the right channels</p></div>
+    <div class="fcard"><i class="fas fa-tasks"></i><h3>Workflows</h3><p>Easily document, assign, and track processes</p></div>
+  </div>
+</section>
+
+<!-- Безопасность -->
+<section>
+  <h2>Secure and private</h2>
+  <div class="security-grid">
+    <div class="sec-item"><i class="fas fa-fingerprint"></i><p>GDPR & CCPA compliant</p></div>
+    <div class="sec-item"><i class="fas fa-shield-alt"></i><p>Pen-tested</p></div>
+    <div class="sec-item"><i class="fas fa-lock"></i><p>SSL-Certified</p></div>
+  </div>
+</section>
+
+<!-- 4.png -->
+<section>
+  <img src="4.png" alt="Team">
+</section>
+
+<!-- CTA + 5.png -->
+<section class="cta">
+  <h2>The missing connectivity<br>for your team.</h2>
+  <a href="#" class="btn">Set up my work hub</a>
+  <div class="partners"><img src="5.png" alt="Partners"></div>
+</section>
+
+<!-- Футер + 6.png -->
+<footer>
+  <div><img src="6.png" alt="Qatalog + Salesforce" style="max-width:300px"></div>
+  <div><h4>Product</h4><div>Directory<br>Projects<br>Search<br>Workflows<br>Goals<br>Posts<br>Integrations</div></div>
+  <div><h4>Company</h4><div>Who we are<br>Manifesto<br>Our language<br>Pricing<br>Newsroom<br>Careers<br>Contact sales</div></div>
+  <div><h4>Resources</h4><div>Blog<br>Help center<br>Templates<br>Newsletter</div></div>
+
+  <div class="footer-bottom">
+    <div>Copyright © 2024 Qatalog Ltd. All rights reserved.</div>
+    <div><a href="#">Privacy Policy</a> • <a href="#">Terms of Service</a></div>
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const slides = document.getElementById('slides');
+  const dots = document.querySelectorAll('.dot');
+  let current = 0;
+
+  function go(n) {
+    current = n;
+    slides.style.transform = `translateX(-${n * 33.333}%)`;
+    dots.forEach((d,i) => d.classList.toggle('active', i===n));
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.slide')[n].children[1].classList.add('active');
+  }
+  go(0);
+</script>
+</body>
+</html>

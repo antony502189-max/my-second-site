@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 • Java HUB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Comfortaa', sans-serif;
+      background: #0f0f1e;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 48px;
+      margin-bottom: 20px;
+      background: linear-gradient(#000, #ff9500);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span { color: #ff9500; }
+
+    .big404 {
+      font-size: 180px;
+      font-weight: 700;
+      margin: 30px 0;
+      color: #ff9500;
+      text-shadow: 0 0 40px rgba(255,149,0,0.5);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .typing {
+      font-size: 34px;
+      font-weight: 500;
+      max-width: 960px;
+      margin: 50px auto;
+      line-height: 1.6;
+    }
+    .typing span {
+      opacity: 0;
+      display: inline-block;
+      animation: type 0.07s ease-out forwards;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 30px rgba(255,149,0,0.4); }
+      to   { text-shadow: 0 0 60px rgba(255,149,0,0.7); }
+    }
+    @keyframes type {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .logo { font-size: 36px; }
+      .big404 { font-size: 120px; }
+      .typing { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">Qatalog</div>
+  <div class="big404">404</div>
+
+  <div class="typing" id="typing">
+    Ой, приятно было сдавать вам лабы, Екатерина Сергеевна. Увидимся на ВвБД)
+  </div>
+
+  <script>
+    const el = document.getElementById('typing');
+    const text = el.textContent.trim();
+    el.innerHTML = '';
+    text.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char === ' ' ? '\u00A0' : char;
+      span.style.animationDelay = `${i * 0.06}s`;
+      el.appendChild(span);
+    });
+  </script>
+
+</body>
+</html>
